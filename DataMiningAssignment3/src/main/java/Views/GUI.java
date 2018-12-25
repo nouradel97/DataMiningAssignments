@@ -96,11 +96,24 @@ public class GUI extends Application {
                     textAreaFirstAlgorithm.clear();
                     textAreaSecondAlgorithm.clear();
 
-                    pane.add(textAreaFirstAlgorithm, 0, 1,1,4);
-                    pane.add(textAreaSecondAlgorithm, 1, 1,1,4);
+                    textAreaFirstAlgorithm.setEditable(false);
+                    textAreaSecondAlgorithm.setEditable(false);
 
-                    textAreaFirstAlgorithm.setMinSize(620, 570);
-                    textAreaSecondAlgorithm.setMinSize(620, 570);
+                    pane.add(textAreaFirstAlgorithm, 0, 2,1,4);
+                    pane.add(textAreaSecondAlgorithm, 1, 2,1,4);
+
+                    textAreaFirstAlgorithm.setMinSize(620, 555);
+                    textAreaSecondAlgorithm.setMinSize(620, 555);
+
+                    final Label firstAlgorithm = new Label("Baysian Algorithm");
+                    firstAlgorithm.setMinWidth(150);
+                    firstAlgorithm.setStyle("-fx-text-fill: #faafbe; -fx-font-size: 18");
+                    pane.add(firstAlgorithm, 0, 1, 1, 1);
+
+                    final Label secondAlgorithm = new Label("K-nearest Algorithm");
+                    secondAlgorithm.setMinWidth(150);
+                    secondAlgorithm.setStyle("-fx-text-fill: #faafbe; -fx-font-size: 18");
+                    pane.add(secondAlgorithm, 1, 1, 1, 1);
 
                     Button run = new Button("RUN");
                     run.setStyle("-fx-background-color: #faafbe; -fx-font-size: 18");
@@ -113,30 +126,38 @@ public class GUI extends Application {
                             BaysianAlgorithm baysianAlgorithm = new BaysianAlgorithm(GUI.this);
                             float firstAlgorithmAccuracy = baysianAlgorithm.run();
 
-                            KnearestAlgorithm knearestAlgorithm =
-                                    new KnearestAlgorithm(baysianAlgorithm.getClasses(), GUI.this);
-                            float secondAlgorithmAccuracy = knearestAlgorithm.run(Integer.parseInt(field.getText()));
+                            if (Integer.parseInt(field.getText()) > baysianAlgorithm.getClasses().size()) {
 
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setHeaderText("Accuracy");
-                            if (firstAlgorithmAccuracy > secondAlgorithmAccuracy) {
+                                textAreaSecondAlgorithm.appendText("ERROR!! \nThe number of labels in the file = " +
+                                        baysianAlgorithm.getClasses().size() + ", so K is greater than labels number" +
+                                        " , you can back and try again.");
 
-                                alert.setContentText("Baysian Algorithm = " + firstAlgorithmAccuracy +
-                                        " ,K-nearest Algorithm = " + secondAlgorithmAccuracy + "\n\n" +
-                                        "so the baysian algorithm more accurate than K-nearest Algorithm");
-                            } else if (firstAlgorithmAccuracy < secondAlgorithmAccuracy) {
-
-                                alert.setContentText("Baysian Algorithm = " + firstAlgorithmAccuracy +
-                                        " ,K-nearest Algorithm = " + secondAlgorithmAccuracy + "\n\n" +
-                                        "so the K-nearest algorithm more accurate than baysian Algorithm");
                             } else {
+                                KnearestAlgorithm knearestAlgorithm =
+                                        new KnearestAlgorithm(baysianAlgorithm.getClasses(), GUI.this);
+                                float secondAlgorithmAccuracy = knearestAlgorithm.run(Integer.parseInt(field.getText()));
 
-                                alert.setContentText("Baysian Algorithm = " + firstAlgorithmAccuracy +
-                                        " ,K-nearest Algorithm = " + secondAlgorithmAccuracy + "\n\n" +
-                                        "so the two algorithms are equally likely");
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setHeaderText("Accuracy");
+                                if (firstAlgorithmAccuracy > secondAlgorithmAccuracy) {
+
+                                    alert.setContentText("Baysian Algorithm = " + firstAlgorithmAccuracy +
+                                            " ,K-nearest Algorithm = " + secondAlgorithmAccuracy + "\n\n" +
+                                            "So the baysian algorithm more accurate than K-nearest Algorithm");
+                                } else if (firstAlgorithmAccuracy < secondAlgorithmAccuracy) {
+
+                                    alert.setContentText("Baysian Algorithm = " + firstAlgorithmAccuracy +
+                                            " ,K-nearest Algorithm = " + secondAlgorithmAccuracy + "\n\n" +
+                                            "so the K-nearest algorithm more accurate than baysian Algorithm");
+                                } else {
+
+                                    alert.setContentText("Baysian Algorithm = " + firstAlgorithmAccuracy +
+                                            " ,K-nearest Algorithm = " + secondAlgorithmAccuracy + "\n\n" +
+                                            "so the two algorithms are equally likely");
+                                }
+
+                                alert.show();
                             }
-
-                            alert.show();
                         }
                     });
 
@@ -148,14 +169,12 @@ public class GUI extends Application {
                             stage.hide();
                         }
                     });
-                    pane.add(back, 0, 6,1,1);
+                    pane.add(back, 0, 7,1,1);
                     pane.setStyle("-fx-background-color: #013");
 
                     Scene scene = new Scene(pane, 1400, 700);
                     stage.setScene(scene);
                     stage.show();
-
-
                 }
             }
         });

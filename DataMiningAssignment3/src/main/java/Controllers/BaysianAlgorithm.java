@@ -183,10 +183,10 @@ public class BaysianAlgorithm {
         return classlabel;
     }
 
-    private float calculateAlgorithmAccurecy(List<ClassLabel> labels){
+    private float calculateAlgorithmAccuracy(List<ClassLabel> labels){
 
         int counter = 0;
-        float accurecy = 0;
+        float accuracy = 0;
         List objectValues;
 
         for (int i=0; i<labels.size(); i++){
@@ -196,8 +196,8 @@ public class BaysianAlgorithm {
                 counter++;
         }
 
-        accurecy = ((float) counter / data.getTestingData().size()) * 100;
-        return accurecy;
+        accuracy = ((float) counter / data.getTestingData().size()) * 100;
+        return accuracy;
     }
 
     public float run(){
@@ -215,13 +215,13 @@ public class BaysianAlgorithm {
         for(int i=0; i<data.getTestingData().size(); i++){
 
             temp = data.getTestingData().get(i).getValues();
-            gui.appendToFirstTextArea("actual class label: " + temp.get(temp.size() - 1) + '\t');
-            gui.appendToFirstTextArea(",predicted class label: " + labels.get(i).getName());
+            gui.appendToFirstTextArea("actual class label: " + temp.get(temp.size() - 1) + '\t' +
+                    ",predicted class label: " + labels.get(i).getName());
             gui.appendToFirstTextArea("");
         }
 
-        float accuracy = calculateAlgorithmAccurecy(labels);
-        gui.appendToFirstTextArea("accurecy = " + accuracy);
+        float accuracy = calculateAlgorithmAccuracy(labels);
+        gui.appendToFirstTextArea("accuracy = " + accuracy);
         return accuracy;
     }
 }

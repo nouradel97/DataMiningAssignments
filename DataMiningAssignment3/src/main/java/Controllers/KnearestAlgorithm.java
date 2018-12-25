@@ -100,9 +100,10 @@ public class KnearestAlgorithm {
 
         List list;
         for(int i=0; i<data.getTestingData().size(); i++){
+
             list = data.getTestingData().get(i).getValues();
-            gui.appendToSecondTextArea("actual class label: " + list.get(list.size() - 1) + '\t');
-            gui.appendToSecondTextArea(",predicted class label: " + predictedClasses.get(i).getName());
+            gui.appendToSecondTextArea("actual class label: " + list.get(list.size() - 1) + '\t' +
+                    ",predicted class label: " + predictedClasses.get(i).getName() );
             gui.appendToSecondTextArea("");
         }
 
