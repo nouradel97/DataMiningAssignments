@@ -123,18 +123,18 @@ public class GUI extends Application {
                         @Override
                         public void handle(ActionEvent event) {
 
-                            BaysianAlgorithm baysianAlgorithm = new BaysianAlgorithm(GUI.this);
+                            BaysianAlgorithm baysianAlgorithm = new BaysianAlgorithm(Views.GUI.this);
                             float firstAlgorithmAccuracy = baysianAlgorithm.run();
 
-                            if (Integer.parseInt(field.getText()) > baysianAlgorithm.getClasses().size()) {
+                            if (Integer.parseInt(field.getText()) > baysianAlgorithm.getData().getTrainingData().size()) {
 
-                                textAreaSecondAlgorithm.appendText("ERROR!! \nThe number of labels in the file = " +
-                                        baysianAlgorithm.getClasses().size() + ", so K is greater than labels number" +
-                                        " , you can back and try again.");
+                                textAreaSecondAlgorithm.appendText("ERROR!! \nThe number of tuples = " +
+                                        baysianAlgorithm.getData().getTrainingData().size()
+                                        + ", so K is greater than size of data, you can back and try again.");
 
                             } else {
                                 KnearestAlgorithm knearestAlgorithm =
-                                        new KnearestAlgorithm(baysianAlgorithm.getClasses(), GUI.this);
+                                        new KnearestAlgorithm(baysianAlgorithm.getClasses(), Views.GUI.this);
                                 float secondAlgorithmAccuracy = knearestAlgorithm.run(Integer.parseInt(field.getText()));
 
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
